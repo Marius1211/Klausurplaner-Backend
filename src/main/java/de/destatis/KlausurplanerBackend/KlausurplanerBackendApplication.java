@@ -8,6 +8,7 @@ public class KlausurplanerBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(KlausurplanerBackendApplication.class, args);
+		System.out.println("Hallo");
 	}
 
 }
