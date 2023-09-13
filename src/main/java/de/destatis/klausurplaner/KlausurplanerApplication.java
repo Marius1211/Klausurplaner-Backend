@@ -1,13 +1,13 @@
-package de.destatis.KlausurplanerBackend;
+package de.destatis.klausurplaner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KlausurplanerBackendApplication {
+public class KlausurplanerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KlausurplanerBackendApplication.class, args);
+		SpringApplication.run(KlausurplanerApplication.class, args);
 	}
 
 }

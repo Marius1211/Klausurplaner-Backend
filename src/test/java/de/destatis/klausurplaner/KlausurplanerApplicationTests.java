@@ -1,10 +1,10 @@
-package de.destatis.KlausurplanerBackend;
+package de.destatis.klausurplaner;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class KlausurplanerBackendApplicationTests {
+class KlausurplanerApplicationTests {
 
 	@Test
 	void contextLoads() {
