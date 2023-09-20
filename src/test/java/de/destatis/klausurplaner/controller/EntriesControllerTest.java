@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
@@ -31,13 +30,13 @@ public class EntriesControllerTest {
  
     @Test
     public void testEntriesGetIsAvailable() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/shoppinglist/entries"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/examlist/entries"))
                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void testEntriesGetIsAvailableAndReturnsData() throws Exception {
-        mockMvc.perform(get("/shoppinglist/entries"))
+        mockMvc.perform(get("/examlist/entries"))
             .andExpect(status().isOk()) //ist HTTP-Status 200
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$", hasSize(2))) //erwartet ein Array das 2 Elemente beinhaltet
@@ -56,7 +55,7 @@ public class EntriesControllerTest {
     @Test
     public void testAddEntry() throws Exception {
         //Ueberprueft die Anzahl der Eintraege
-        mockMvc.perform(get("/shoppinglist/entries"))
+        mockMvc.perform(get("/examlist/entries"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(2)));
     
@@ -70,13 +69,13 @@ public class EntriesControllerTest {
             """;
     
         //Fuegt den neuen Eintrag hinzu
-        mockMvc.perform(post("/shoppinglist/entries")
+        mockMvc.perform(post("/examlist/entries")
             .content(payload)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
     
         //Ueberprueft, ob sich Anzahl der Eintraege veraendert hat
-        mockMvc.perform(get("/shoppinglist/entries"))
+        mockMvc.perform(get("/examlist/entries"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(3)))
                 //Ueberprueft die Eigenschaften des neuen Eintrags
@@ -84,4 +83,14 @@ public class EntriesControllerTest {
             .andExpect(jsonPath("$[2].amount", is(4)))
             .andExpect(jsonPath("$[2].category", is("vegetables")));
     }
+
+    @Test
+    public void testReadSingle() throws Exception {
+    mockMvc.perform(get("/examlist/entries/2"))
+    .andExpect(status().isOk())
+    .andExpect(jsonPath("$.title", is("Potatoes")))
+    .andExpect(jsonPath("$.amount", is(5)))
+    .andExpect(jsonPath("$.category", is("vegetables")));
+    }
+
 }
