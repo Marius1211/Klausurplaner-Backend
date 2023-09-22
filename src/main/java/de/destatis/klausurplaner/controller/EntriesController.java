@@ -9,69 +9,75 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import de.destatis.klausurplaner.dtos.ExamlistEntryDto;
-import de.destatis.klausurplaner.entities.ExamlistEntry;
-import de.destatis.klausurplaner.repositories.ExamlistRepository;
+import de.destatis.klausurplaner.dataTransferObjects.ExamDto;
+import de.destatis.klausurplaner.entities.Exam;
+import de.destatis.klausurplaner.repositories.ExamRepository;
 
+@CrossOrigin
 @RestController
 public class EntriesController {
  
 @Autowired
-    private ExamlistRepository examlistRepository;
+    private ExamRepository examRepository;
 
-    @GetMapping("/examlist/entries")
-    public ResponseEntity<List<ExamlistEntryDto>> getEntries() {
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
+
+    @GetMapping("/exams")
+    public ResponseEntity<List<ExamDto>> getEntries() {
     
-        List<ExamlistEntry> entries = examlistRepository.findAll();
+        List<Exam> entries = examRepository.findAll();
     
-        List<ExamlistEntryDto> result = entries.stream()
-            .map(entity -> new ExamlistEntryDto(entity.getTitle(), entity.getAmount(), entity.getCategory()))
+        List<ExamDto> result = entries.stream()
+            .map(entity -> new ExamDto(entity.getClassname(), entity.getSubject(), entity.getTopic()))
             .toList();
     
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/examlist/entries")
-    public ResponseEntity<?> postEntry(@RequestBody ExamlistEntryDto payload) {
-        ExamlistEntry entity = new ExamlistEntry();
-        entity.setTitle(payload.title());
-        entity.setAmount(payload.amount());
-        entity.setCategory(payload.category());
+    @PostMapping("/exams")
+    public ResponseEntity<?> postEntry(@RequestBody ExamDto payload) {
+        Exam entity = new Exam();
+        entity.setClassname(payload.classname());
+        entity.setSubject(payload.subject());
+        entity.setTopic(payload.topic());
     
-        entity = examlistRepository.save(entity);
+        entity = examRepository.save(entity);
     
-        URI location = UriComponentsBuilder.fromUriString("/exam/entries/{id}")
+        URI location = UriComponentsBuilder.fromUriString("/exams/{id}")
             .build(entity.getId());
     
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping("/examlist/entries/{id}")
-    public ResponseEntity<ExamlistEntryDto> getSingle(@PathVariable String id) {
-    return ExamlistRepository.findById(id)
-    .map(entity -> new ExamlistEntryDto(entity.getTitle(), entity.getAmount(), entity.getCategory()))
-    .map(ResponseEntity::ok)
-    .orElse(ResponseEntity.notFound().build());
+    @GetMapping("/exams/{id}")
+    public ResponseEntity<ExamDto> getSingle(@PathVariable String id) {
+        return examRepository.findById(id)
+        .map(entity -> new ExamDto(entity.getClassname(), entity.getSubject(), entity.getTopic()))
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
     }
-
-    @DeleteMapping("/examlist/entries/{id}")
+ 
+    @DeleteMapping("/exams/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
-        ExamlistRepository.deleteById(id);
+        examRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/examlist/entries/{id}")
-    public ResponseEntity<ExamlistEntryDto> update(@PathVariable String id, @RequestBody ExamlistEntryDto payload) {
-        Optional<ExamlistEntry> examlistEntry = ExamlistRepository.findById(id)
+    @PutMapping("/exams/{id}")
+    public ResponseEntity<ExamDto> update(@PathVariable String id, @RequestBody ExamDto payload) {
+        Optional<Exam> examEntry = examRepository.findById(id)
         .map(entity -> {
-        entity.setTitle(payload.title());
-        entity.setAmount(payload.amount());
-        entity.setCategory(payload.category());
+        entity.setClassname(payload.classname());
+        entity.setSubject(payload.subject());
+        entity.setTopic(payload.topic());
         return entity;
         });
-        if (examlistEntry.isPresent()) {
-        ExamlistEntry savedEntity = examlistRepository.save(examlistEntry.get());
-        return ResponseEntity.ok(new ExamlistEntryDto(savedEntity.getTitle(), savedEntity.getAmount(), savedEntity.getCategory()));
+        if (examEntry.isPresent()) {
+        Exam savedEntity = examRepository.save(examEntry.get());
+        return ResponseEntity.ok(new ExamDto(savedEntity.getClassname(), savedEntity.getSubject(), savedEntity.getTopic()));
         } else {
         return ResponseEntity.notFound().build();
         }
