@@ -5,16 +5,14 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import de.destatis.klausurplaner.entities.Exam;
-import java.util.List;
-
+import de.destatis.klausurplaner.entities.Role;
 
 @Repository
-public interface ExamRepository extends JpaRepository<Exam, String> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
     
     // SELECT 1 FROM exams WHERE classname = x
-    Optional<Exam> findByClassname(String classname);
-    Boolean existsByClassname(String classname);
+    
+    Optional<Role> findByName(String name);
+
     
 }
-

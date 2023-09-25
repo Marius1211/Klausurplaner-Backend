@@ -5,16 +5,13 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import de.destatis.klausurplaner.entities.Exam;
-import java.util.List;
-
+import de.destatis.klausurplaner.entities.UserEntity;
 
 @Repository
-public interface ExamRepository extends JpaRepository<Exam, String> {
+public interface UserRepository extends JpaRepository<UserEntity, String> {
     
     // SELECT 1 FROM exams WHERE classname = x
-    Optional<Exam> findByClassname(String classname);
-    Boolean existsByClassname(String classname);
     
+    Optional<UserEntity> findByUsername(String username);
+    Boolean existsByUsername(String username);
 }
-
