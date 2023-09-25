@@ -3,8 +3,9 @@ package de.destatis.klausurplaner.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Data
 @Entity
-//@Table //(name = "exams")
+@Table (name = "exams")
 @NoArgsConstructor
 @Getter
 @Setter
