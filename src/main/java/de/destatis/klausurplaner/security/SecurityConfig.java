@@ -16,6 +16,14 @@ import org.springframework.security.web.SecurityFilterChain;*/
 //@Configuration
 //@EnableWebSecurity
 public class SecurityConfig {
+
+	private CustomUserDetailsService userDetailsService;
+
+	@Autowired
+	public SecurityConfig(CustomUserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
+
      /*
     @Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -70,4 +78,15 @@ public class SecurityConfig {
             return new InMemoryUserDetailsManager(admin, user);
     }
     */
+
+	@Bean
+	public AuthenticationManager authenticationManager(
+		AuthenticationConfigeration).throws Exception {
+			return AuthenticationConfigeration.getAuthenticationManager();
+	}
+	
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
