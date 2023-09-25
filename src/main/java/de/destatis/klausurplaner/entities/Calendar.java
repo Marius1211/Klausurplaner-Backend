@@ -5,29 +5,25 @@ import lombok.*;
 
 @Data
 @Entity
-@Table (name = "exams")
+@Table (name = "calendar")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Exam {
-    
+public class Calendar
+{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
     private Long id;
 
     @Column
-    private String classname;
+    private String schulstunde;
 
     @Column
-    private String stunde;
+    private String tag;
 
     @Column
-    private String subject;
+    private String klausurArt;
 
-    @Column
-    private String topic;
-
-    @Column
-    private String sontiges;
 }
