@@ -1,4 +1,7 @@
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import de.destatis.klausurplaner.entities.UserEntity;
 
 
 @RestController
@@ -7,8 +10,8 @@ public class Login {
 
     private UserDetails user;
 
-    const String username;
-    const String password;
+    private String username;
+    private String password;
 
     @PostMapping("/login")
     public ResponseEntity<String> handlePostRequest(@RequestBody String requestData) {
