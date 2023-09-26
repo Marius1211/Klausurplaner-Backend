@@ -7,9 +7,6 @@ public class Login {
 
     private UserDetails user;
 
-    const String username;
-    const String password;
-
     @PostMapping("/login")
     public ResponseEntity<String> handlePostRequest(@RequestBody String requestData) {
         
