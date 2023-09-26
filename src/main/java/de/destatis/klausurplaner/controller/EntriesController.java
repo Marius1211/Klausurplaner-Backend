@@ -17,6 +17,10 @@ import de.destatis.klausurplaner.dataTransferObjects.CalendarDto;
 import de.destatis.klausurplaner.entities.Calendar;
 import de.destatis.klausurplaner.repositories.CalendarRepository;
 
+import de.destatis.klausurplaner.dataTransferObjects.KlasseDto;
+import de.destatis.klausurplaner.entities.Klasse;
+import de.destatis.klausurplaner.repositories.KlasseRepository;
+
 @CrossOrigin
 @RestController
 public class EntriesController {
@@ -25,6 +29,8 @@ public class EntriesController {
     private ExamRepository examRepository;
     @Autowired
     private CalendarRepository calendarRepository;
+    @Autowired
+    private KlasseRepository klasseRepository;
 
 
     @GetMapping("/test")
@@ -51,6 +57,18 @@ public class EntriesController {
 
         List<CalendarDto> result = entries.stream()
                 .map(entity -> new CalendarDto(entity.getSchulstunde(), entity.getTag(), entity.getKlausurArt()))
+                .toList();
+
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/klasse")
+    public ResponseEntity<List<KlasseDto>> getEntriesKlasse() {
+
+        List<Klasse> entries = klasseRepository.findAll();
+
+        List<KlasseDto> result = entries.stream()
+                .map(entity -> new KlasseDto(entity.getKlassenbezeichnung(), entity.getAnzSchueler(), entity.getKlassenraum()))
                 .toList();
 
         return ResponseEntity.ok(result);

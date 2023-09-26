@@ -1,6 +1,8 @@
 package de.destatis.klausurplaner;
 
 import de.destatis.klausurplaner.entities.Calendar;
+import de.destatis.klausurplaner.entities.Klasse;
+import de.destatis.klausurplaner.repositories.KlasseRepository;
 import de.destatis.klausurplaner.repositories.CalendarRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -69,6 +71,32 @@ public class KlausurplanerApplication {
 		cal_test5.setTag("Donnerstag");
 		cal_test5.setKlausurArt("Religion Abgabe");
 		calendarRepository.save(cal_test5);
+
+		Klasse klasse_test1 = new Klasse();
+		klasse_test1.setKlassenbezeichnung("12ITa");
+		klasse_test1.setAnzSchueler(19);
+		klasse_test1.setKlassenraum("C210");
+
+		Klasse klasse_test2 = new Klasse();
+		klasse_test2.setKlassenbezeichnung("12ITb");
+		klasse_test2.setAnzSchueler(15);
+		klasse_test2.setKlassenraum("C209");
+
+		Klasse klasse_test3 = new Klasse();
+		klasse_test3.setKlassenbezeichnung("12ITc");
+		klasse_test3.setAnzSchueler(23);
+		klasse_test3.setKlassenraum("C207");
+
+		Klasse klasse_test4 = new Klasse();
+		klasse_test4.setKlassenbezeichnung("10ITa");
+		klasse_test4.setAnzSchueler(5);
+		klasse_test4.setKlassenraum("C210");
+
+		KlasseRepository klasseRepository = applocationContext.getBean(KlasseRepository.class);
+		klasseRepository.save(klasse_test1);
+		klasseRepository.save(klasse_test2);
+		klasseRepository.save(klasse_test3);
+		klasseRepository.save(klasse_test4);
 
 	}
 
