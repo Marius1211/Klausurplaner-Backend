@@ -1,5 +1,8 @@
 package de.destatis.klausurplaner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.destatis.klausurplaner.entities.Calendar;
 import de.destatis.klausurplaner.entities.Klasse;
 import de.destatis.klausurplaner.repositories.KlasseRepository;
@@ -12,7 +15,11 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import de.destatis.klausurplaner.entities.Exam;
+import de.destatis.klausurplaner.entities.Role;
+import de.destatis.klausurplaner.entities.UserEntity;
 import de.destatis.klausurplaner.repositories.ExamRepository;
+import de.destatis.klausurplaner.repositories.RoleRepository;
+import de.destatis.klausurplaner.repositories.UserRepository;
 
 @SpringBootApplication
 public class KlausurplanerApplication {
@@ -98,6 +105,23 @@ public class KlausurplanerApplication {
 		klasseRepository.save(klasse_test3);
 		klasseRepository.save(klasse_test4);
 
+		/*
+		Role role = new Role();
+		role.setId(1);
+		role.setName("ADMIN");
+
+		RoleRepository roleRepository = applocationContext.getBean(RoleRepository.class);
+		roleRepository.save(role);
+
+		/*
+		UserEntity user = new UserEntity();
+		user.setId(1);
+		user.setPassword("123");
+		user.setRoles();
+		
+		UserRepository userRepository = applocationContext.getBean(UserRepository.class);
+		userRepository.save(user);
+		*/
 	}
 
 	@Bean
