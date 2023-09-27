@@ -8,11 +8,12 @@ import org.springframework.stereotype.Repository;
 import de.destatis.klausurplaner.entities.Role;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, String> {
     
     // SELECT 1 FROM exams WHERE classname = x
     
     Optional<Role> findByName(String name);
+    Boolean existsByName(String name);
 
     
 }

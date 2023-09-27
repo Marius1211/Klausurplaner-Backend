@@ -1,4 +1,4 @@
 package de.destatis.klausurplaner.dataTransferObjects;
 
-public record ExamDto(String classname,  String subject, String topic) {
+public record ExamDto(Long id, String classname, String stunde, String subject, String topic, String sonstiges) {
 }

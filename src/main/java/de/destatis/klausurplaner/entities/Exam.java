@@ -12,7 +12,7 @@ import lombok.*;
 public class Exam {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
@@ -20,8 +20,14 @@ public class Exam {
     private String classname;
 
     @Column
+    private String stunde;
+
+    @Column
     private String subject;
 
     @Column
     private String topic;
+
+    @Column
+    private String sontiges;
 }
