@@ -28,7 +28,7 @@ public class Login {
     }
 
     public void findUser(String username) {
-        UserVerification verification = new UserVerification();
+        CustomUserDetailsService verification = new CustomUserDetailsService();
 
         this.user = verification.loadUserByUsername(username);
     }
