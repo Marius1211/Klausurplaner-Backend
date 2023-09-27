@@ -123,6 +123,7 @@ public class SecurityConfig {
     }
     */
 
+    // Dies erstellt ein BCryptPasswordEncoder damit man einfach die Daten Verschlüsseln zu können
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

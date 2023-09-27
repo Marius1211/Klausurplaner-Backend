@@ -10,6 +10,7 @@ public class Login {
 
     private UserDetails user;
 
+    // Diese Funktion erhällt einen fetch POST request und nimmt ihn an
     @PostMapping("/login")
     public ResponseEntity<String> handlePostRequest(@RequestBody String requestData) {
         
@@ -27,12 +28,15 @@ public class Login {
         return ResponseEntity.ok(response);
     }
 
+    // Diese Funktion sucht mit dem Usernamen, ob der Benutzer existiert
     public void findUser(String username) {
         CustomUserDetailsService verification = new CustomUserDetailsService();
 
         this.user = verification.loadUserByUsername(username);
     }
 
+    // Diese Funktion verifixiert, dass der Benutzer auch die Person ist,
+    // indem es mit dem Password es vergleicht
     public boolean verify(String password) {
         if(new SecurityConfig().passwordEncoder().matches(password, user.getPassword)) {
             return true;
