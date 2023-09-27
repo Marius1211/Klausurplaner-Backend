@@ -74,7 +74,7 @@ public class SecurityConfig {
             .and()
             .httpBasic();
 */
-         http.csrf(csrf -> csrf.disable())
+         http.csrf().disable()
                 .authorizeHttpRequests((authorize) -> authorize
                                 .requestMatchers(antMatcher("/api/auth/**")).permitAll()
                                 .requestMatchers(antMatcher("/h2-console/**")).permitAll()

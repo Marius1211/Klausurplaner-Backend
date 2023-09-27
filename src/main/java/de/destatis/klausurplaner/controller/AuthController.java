@@ -35,19 +35,39 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /*
+     * Neuen Benutzer Registrieren
+     * POST: http://localhost:8080/api/auth/register
+     *  {
+     *      "role"      :   "$ROLE"  
+     *      "username"  :   "$USERNAME"
+     *      "password"  :   "$PASSWORD"
+     *  }
+     */
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
+        
+        //Wenn Rolle nicht vorhanden FEHLER
+        if(!roleRepository.existsByName(registerDto.getRole())) {
+            return new ResponseEntity<String>("Rolle nicht vorhanden!", HttpStatus.BAD_REQUEST);
+        }
+
+        //Wenn Username bereits vorhanden FEHLER
         if(userRepository.existsByUsername(registerDto.getUsername())) {
             return new ResponseEntity<String>("Benutzername ist bereits vorhanden!", HttpStatus.BAD_REQUEST);
         }
 
+
+        //Erstelle neuen Benutzer
         UserEntity user = new UserEntity();
         user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
-        Role roles = roleRepository.findByName("USER").get();
+        //Finde ausgewählte Rolle
+        Role roles = roleRepository.findByName(registerDto.getRole()).get();
         user.setRoles(Collections.singletonList(roles));
 
+        //Speichere Benutzer
         userRepository.save(user);
 
         return new ResponseEntity<String>("Nutzer erfolgreich registriert", HttpStatus.OK);
