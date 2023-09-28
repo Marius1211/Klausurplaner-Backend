@@ -23,6 +23,11 @@ import de.destatis.klausurplaner.entities.UserEntity;
 import de.destatis.klausurplaner.repositories.RoleRepository;
 import de.destatis.klausurplaner.repositories.UserRepository;
 
+/**
+ * @author Marius
+ * 
+ * RestController für die Authentifizierung der Benutzer
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -32,6 +37,14 @@ public class AuthController {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Constructor
+     * 
+     * @param authenticationManager
+     * @param userRepository
+     * @param roleRepository
+     * @param passwordEncoder
+     */
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
@@ -40,6 +53,16 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Als bestehender Benutzer einloggen
+     * POST-Request: http://localhost:8080/api/auth/login
+     *  {
+     *      "username"  :   "$USERNAME"
+     *      "password"  :   "$PASSWORD"
+     *  }
+     * 
+     * @param loginDto
+     */
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
 
@@ -61,14 +84,16 @@ public class AuthController {
         return new ResponseEntity<>("Benutzer erfolgreich angemeldet", HttpStatus.OK);
     }
 
-    /*
+    /**
      * Neuen Benutzer Registrieren
-     * POST: http://localhost:8080/api/auth/register
+     * POST-Request: http://localhost:8080/api/auth/register
      *  {
      *      "role"      :   "$ROLE"  
      *      "username"  :   "$USERNAME"
      *      "password"  :   "$PASSWORD"
      *  }
+     * 
+     * @param loginDto
      */
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {

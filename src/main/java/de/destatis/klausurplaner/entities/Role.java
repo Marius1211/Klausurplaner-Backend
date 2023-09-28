@@ -11,6 +11,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * @author Marius
+ * 
+ * Datenbanktabelle für Rollen
+ */
 @Data
 @Entity
 @Table (name = "roles")

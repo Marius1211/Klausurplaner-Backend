@@ -27,6 +27,11 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
+/**
+ * @author Marius
+ * 
+ * Security Configuration
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -46,6 +51,14 @@ public class SecurityConfig {
         return new MvcRequestMatcher.Builder(introspector);
     }
 
+    /**
+     * Autorisierte Seiten
+     * 
+     * @param http
+     * @param mvc
+     * @return
+     * @throws Exception
+     */
     @Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 

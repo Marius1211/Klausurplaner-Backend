@@ -21,6 +21,12 @@ import de.destatis.klausurplaner.dataTransferObjects.KlasseDto;
 import de.destatis.klausurplaner.entities.Klasse;
 import de.destatis.klausurplaner.repositories.KlasseRepository;
 
+/**
+ * @author Marius:  GET("/exams"), POST("/exams")
+ * @author Patrick: GET("/kalender"), GET("/klasse")
+ * 
+ * RestController für API-Requests
+ */
 @CrossOrigin
 @RestController
 public class EntriesController {
@@ -32,14 +38,11 @@ public class EntriesController {
     @Autowired
     private KlasseRepository klasseRepository;
 
-
-    @GetMapping("/test")
-    public String test() {
-        return "test";
-    }
-
-
-    
+    /**
+     * GET-Request für Klausuren
+     * 
+     * @return
+     */
     @GetMapping("/exams")
     public ResponseEntity<List<ExamDto>> getEntries() {
     
@@ -52,6 +55,11 @@ public class EntriesController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * GET-Request für Kalendereinträge
+     * 
+     * @return
+     */
     @GetMapping("/calendar")
     public ResponseEntity<List<CalendarDto>> getEntriesCalendar() {
 
@@ -64,6 +72,11 @@ public class EntriesController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * GET-Request für Klassen
+     * 
+     * @return
+     */
     @GetMapping("/klasse")
     public ResponseEntity<List<KlasseDto>> getEntriesKlasse() {
 
@@ -76,6 +89,12 @@ public class EntriesController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * POST-Request für Klausuren
+     * 
+     * @param payload
+     * @return
+     */
     @PostMapping("/exams")
     public ResponseEntity<?> postEntry(@RequestBody ExamDto payload) {
         Exam entity = new Exam();
@@ -92,6 +111,12 @@ public class EntriesController {
         return ResponseEntity.created(location).build();
     }
 
+    /**
+     * GET-Request für einzelne Klausur
+     * 
+     * @param id
+     * @return
+     */
     @GetMapping("/exams/{id}")
     public ResponseEntity<ExamDto> getSingle(@PathVariable String id) {
         return examRepository.findById(id)
@@ -100,12 +125,25 @@ public class EntriesController {
         .orElse(ResponseEntity.notFound().build());
     }
  
+    /**
+     * DELETE-Request für einzelne Klausur
+     * 
+     * @param id
+     * @return
+     */
     @DeleteMapping("/exams/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         examRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * PUT-Request für einzelne Klausur
+     * 
+     * @param id
+     * @param payload
+     * @return
+     */
     @PutMapping("/exams/{id}")
     public ResponseEntity<ExamDto> update(@PathVariable String id, @RequestBody ExamDto payload) {
         Optional<Exam> examEntry = examRepository.findById(id)

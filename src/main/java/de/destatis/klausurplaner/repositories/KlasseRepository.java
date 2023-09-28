@@ -8,6 +8,11 @@ import de.destatis.klausurplaner.entities.Klasse;
 
 import java.util.Optional;
 
+/**
+ * @author Marius
+ * 
+ * JPA Repository für vereinfachten Zugriff auf die  Datenbanktabelle für Klassen
+ */
 public interface KlasseRepository extends JpaRepository<Klasse, String>
 {
 

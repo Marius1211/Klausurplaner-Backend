@@ -3,6 +3,11 @@ package de.destatis.klausurplaner.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * @author Patrick
+ * 
+ * Datenbanktabelle für Klassen
+ */
 @Data
 @Entity
 @Table (name = "klassen")

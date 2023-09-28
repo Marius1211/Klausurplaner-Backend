@@ -17,6 +17,11 @@ import de.destatis.klausurplaner.entities.Role;
 import de.destatis.klausurplaner.entities.UserEntity;
 import de.destatis.klausurplaner.repositories.UserRepository;
 
+/**
+ * @author Marius
+ * 
+ * Eigener UserDetailsService
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

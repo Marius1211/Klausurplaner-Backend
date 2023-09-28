@@ -3,6 +3,11 @@ package de.destatis.klausurplaner.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * @author Marius
+ * 
+ * Datenbanktabelle für Klausuren
+ */
 @Data
 @Entity
 @Table (name = "exams")

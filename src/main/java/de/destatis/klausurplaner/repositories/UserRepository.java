@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import de.destatis.klausurplaner.entities.UserEntity;
 
+/**
+ * @author Marius
+ * 
+ * JPA Repository für vereinfachten Zugriff auf die  Datenbanktabelle für Benutzer
+ */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
     

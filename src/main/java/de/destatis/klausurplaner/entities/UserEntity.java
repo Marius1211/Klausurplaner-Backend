@@ -19,6 +19,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * @author Marius
+ * 
+ * Datenbanktabelle für Benutzer
+ */
 @Data
 @NoArgsConstructor
 @Getter

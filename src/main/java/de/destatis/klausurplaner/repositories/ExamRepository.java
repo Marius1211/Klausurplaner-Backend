@@ -8,7 +8,11 @@ import org.springframework.stereotype.Repository;
 import de.destatis.klausurplaner.entities.Exam;
 import java.util.List;
 
-
+/**
+ * @author Marius
+ * 
+ * JPA Repository für vereinfachten Zugriff auf die  Datenbanktabelle für Klausuren
+ */
 @Repository
 public interface ExamRepository extends JpaRepository<Exam, String> {
     

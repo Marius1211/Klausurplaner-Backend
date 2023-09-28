@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import de.destatis.klausurplaner.entities.Role;
 
+/**
+ * @author Marius
+ * 
+ * JPA Repository für vereinfachten Zugriff auf die  Datenbanktabelle für Rollen
+ */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, String> {
     
