@@ -38,6 +38,8 @@ public class EntriesController {
         return "test";
     }
 
+
+    
     @GetMapping("/exams")
     public ResponseEntity<List<ExamDto>> getEntries() {
     

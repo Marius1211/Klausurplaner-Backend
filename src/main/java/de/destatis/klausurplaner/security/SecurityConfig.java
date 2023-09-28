@@ -35,13 +35,6 @@ public class SecurityConfig {
 
     private static final String API_URL_PATTERN = "api/auth/**";
 
-    /*
-   @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
-                .withUser("user").password("password").roles("ADMIN");
-    }*/
 
     @Autowired
     public SecurityConfig(CustomUserDetailsService userDetailsService) {
@@ -56,70 +49,24 @@ public class SecurityConfig {
     @Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
-/*
-        http.csrf(csrfConfigurer ->
-                csrfConfigurer.ignoringRequestMatchers(mvcMatcherBuilder.pattern(API_URL_PATTERN),
-                        PathRequest.toH2Console()));
-*/
+
         http.headers(headersConfigurer ->
                 headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 
-        /*
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeRequests()
-            .requestMatchers(antMatcher("/api/auth/**")).permitAll()
-            .requestMatchers(antMatcher("/h2-console/**")).permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .httpBasic();
-*/
-         http.csrf().disable()
+
+        http.csrf().disable()
                 .authorizeHttpRequests((authorize) -> authorize
                                 .requestMatchers(antMatcher("/api/auth/**")).permitAll()
                                 .requestMatchers(antMatcher("/h2-console/**")).permitAll()
+                                .requestMatchers(antMatcher("/**")).permitAll()
                                 .anyRequest().authenticated()
     
             ); 
-
-
-
-
-            /*
-            http.authorizeHttpRequests((authorize) -> authorize
-
-                .csrf().disable()
-                .authorizeRequests()
-                .requestMatchers(HttpMethod.GET).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin((form) -> form
-                                .loginPage("http://localhost:8080/login")
-                                .permitAll()
-                )
-                .logout((logout) -> logout.permitAll())
-                .httpBasic();
-            */
 
 		return http.build();
 	}
     
     
-    @Bean
-    public UserDetailsService users() {
-        UserDetails admin = User.builder()
-            .username("admin")
-			.password("password")
-			.roles("ADMIN")
-			.build();
-        UserDetails user = User.builder()
-            .username("user")
-			.password("password")
-			.roles("USER")
-			.build();
-
-            return new InMemoryUserDetailsManager(admin, user);
-    }
     
     @Bean
     public AuthenticationManager authentificationManager(
@@ -128,6 +75,26 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    /*
+     * Spring Security: BCrypt Passwort Hashing Methode:
+     * 
+     * Besteht aus dem Passwort-String (bis zu 72 bytes), einem numerischen 'cost'-Parameter (standardmäßig 12),
+     * und einem 16 byte 'salt'-Wert (Wert aus zufälligen Zeichen).
+     * Dieser Prozess wird in mehreren Runden (2^cost Runden) durch den Eksblowfish Algorithmus modifiziert.
+     * 
+     * Beispiel: input = 'abc123xyz', cost-Wert von 12
+     * 
+     * $2<a/b/x/y>$[cost]$[22 character salt][31 character hash]
+     * 
+     * 
+     * $2a$12$R9h/cIPz0gi.URNNX3kh2OPST9/PgBkqquzi.Ss7KIUgO2t0jWMUW
+     * \__/\/ \____________________/\_____________________________/
+     *Alg Cost      Salt                        Hash
+     *
+     * ($2a$ = Hash Algorithmus identifikator [bcrypt])
+     * 
+     * Quelle: https://en.wikipedia.org/wiki/Bcrypt
+     */
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
